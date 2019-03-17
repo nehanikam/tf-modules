@@ -8,6 +8,11 @@ resource "aws_launch_configuration" "example" {
   }
 }
 
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer-key"
+  public_key = "${var.public_key}"
+}
+
 resource "aws_autoscaling_group" "example" {
   launch_configuration = "${aws_launch_configuration.example.id}"
   availability_zones   = ["${data.aws_availability_zones.all.names}"]
@@ -38,6 +43,16 @@ resource "aws_security_group_rule" "allow_server_http_inbound" {
 
   from_port   = "${var.server_port}"
   to_port     = "${var.server_port}"
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "allow_ssh" {
+  type              = "ingress"
+  security_group_id = "${aws_security_group.instance.id}"
+
+  from_port   = "${var.ssh_port}"
+  to_port     = "${var.ssh_port}"
   protocol    = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
 }
