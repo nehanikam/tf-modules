@@ -2,6 +2,8 @@ resource "aws_launch_configuration" "example" {
   image_id        = "${var.image_id}"
   instance_type   = "${var.instance_type}"
   security_groups = ["${aws_security_group.instance.id}"]
+  user_data       = "${var.ssh-key}"
+
 
   lifecycle {
     create_before_destroy = true

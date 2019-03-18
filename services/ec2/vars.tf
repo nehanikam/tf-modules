@@ -31,3 +31,6 @@ variable "public_key" {
     description = "The public key of the user who spins the instance"
 }
 
+variable "ssh-key" {
+    description = "The SSH keys of the users"
+}
