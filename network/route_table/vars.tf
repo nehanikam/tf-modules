@@ -51,3 +51,4 @@ variable "use_vpc_peering" {
 variable "association_id" {
   description = "The id of the resource to which rt has to be added (can be gateway, instance etc..)"
 }
+
